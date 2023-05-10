@@ -7,13 +7,13 @@ PACFILE="/tmp/selpac_list-"$$".txt"
 GETPASS=$( zenity --password )
 if [ "$GETPASS" = "" ]
 then
-    zenity --error --text="パスワードが入力されていません"
+    zenity --error --title="実行エラー" --text="パスワードが入力されていません"
     exit 1
 fi
 echo $GETPASS | sudo -S pwd
 if [ $? != 0 ]
 then
-    zenity --error --text="パスワードが違います"
+    zenity --error --title="実行エラー" --text="パスワードが違います"
     exit 2
 fi
 
@@ -58,7 +58,7 @@ case "$GETSEL" in
             echo "アップグレード可のパッケージはありません" >> $LOGFILE
         else
             kill $GETPID
-            cat $PACFILE | zenity --list --column="パッケージ名" --multiple | sed s/"|"/" "/g > $TMPFILE
+            cat $PACFILE | zenity --list --title="アップグレードするパッケージを選択" --column="パッケージ名" --multiple | sed s/"|"/" "/g > $TMPFILE
             RET=$(cat $TMPFILE)
             if [ "$RET" = "" ]
             then
