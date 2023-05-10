@@ -50,22 +50,29 @@ case "$GETSEL" in
         echo $GETPASS | sudo -S apt update &>> $LOGFILE
         echo $GETPASS | sudo -S apt list --upgradable | grep "アップグレード可" | \
                 cut -f 1 -d "/"  > $PACFILE
-        kill $GETPID
 
-        cat $PACFILE | zenity --list --column="パッケージ名" --multiple | sed s/"|"/" "/g > $TMPFILE
-        RET=$(cat $TMPFILE)
-        if [ "$RET" = "" ]
+        if [ $(cat $PACFILE | wc -l ) = 0 ]
         then
             echo "" >> $LOGFILE
             echo "#################################################################" >> $LOGFILE
-            echo "パッケージが選択されていません" >> $LOGFILE
+            echo "アップグレード可のパッケージはありません" >> $LOGFILE
         else
-            zenity --info --title="処理中" --display=$GETDISPLAY --text="このウィンドウが自動で閉じるまで待って下さい" &
-            GETPID=`echo $!`
-            echo "" >> $LOGFILE
-            echo "#################################################################" >> $LOGFILE
-            echo "sudo -S apt install -y --only-upgrade "$RET >> $LOGFILE
-            echo $GETPASS | sudo -S apt install -y --only-upgrade $RET &>> $LOGFILE
+            kill $GETPID
+            cat $PACFILE | zenity --list --column="パッケージ名" --multiple | sed s/"|"/" "/g > $TMPFILE
+            RET=$(cat $TMPFILE)
+            if [ "$RET" = "" ]
+            then
+                echo "" >> $LOGFILE
+                echo "#################################################################" >> $LOGFILE
+                echo "パッケージが選択されていません" >> $LOGFILE
+                else
+                zenity --info --title="処理中" --display=$GETDISPLAY --text="このウィンドウが自動で閉じるまで待って下さい" &
+                GETPID=`echo $!`
+                echo "" >> $LOGFILE
+                echo "#################################################################" >> $LOGFILE
+                echo "sudo -S apt install -y --only-upgrade "$RET >> $LOGFILE
+                echo $GETPASS | sudo -S apt install -y --only-upgrade $RET &>> $LOGFILE
+            fi
         fi
         ;;
     "04")
