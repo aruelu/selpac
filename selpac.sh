@@ -27,7 +27,7 @@ GETSEL=$(zenity --list --title="処理選択" \
         "04" "不要なパッケージの削除" )
 
 zenity --info --title="処理中" --display=$GETDISPLAY --text="このウィンドウが自動で閉じるまで待って下さい" &
-GETPID=`echo $!`
+GETPID=$( echo $! )
 case "$GETSEL" in
     "01")
         echo "sudo -S apt update" >> $LOGFILE
@@ -67,7 +67,7 @@ case "$GETSEL" in
                 echo "パッケージが選択されていません" >> $LOGFILE
                 else
                 zenity --info --title="処理中" --display=$GETDISPLAY --text="このウィンドウが自動で閉じるまで待って下さい" &
-                GETPID=`echo $!`
+                GETPID=$( echo $! )
                 echo "" >> $LOGFILE
                 echo "#################################################################" >> $LOGFILE
                 echo "sudo -S apt install -y --only-upgrade "$RET >> $LOGFILE
