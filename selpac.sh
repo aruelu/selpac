@@ -65,7 +65,9 @@ case "$GETSEL" in
                 echo "" >> $LOGFILE
                 echo "#################################################################" >> $LOGFILE
                 echo "パッケージが選択されていません" >> $LOGFILE
-                else
+                zenity --info --title="処理中" --display=$GETDISPLAY --text="このウィンドウが自動で閉じるまで待って下さい" &
+                GETPID=$( echo $! )
+            else
                 zenity --info --title="処理中" --display=$GETDISPLAY --text="このウィンドウが自動で閉じるまで待って下さい" &
                 GETPID=$( echo $! )
                 echo "" >> $LOGFILE
