@@ -19,7 +19,7 @@ fi
 
 
 GETSEL=$(zenity --list --title="処理選択" \
-        --print-column=1 --column="ID" --column="select" \
+        --print-column=1 --column="ID" --column="処理内容" \
         --width=600  --height=400 \
         "01" "パッケージをアップデート" \
         "02" "パッケージをフルアップデート" \
