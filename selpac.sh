@@ -31,23 +31,28 @@ GETPID=$( echo $! )
 case "$GETSEL" in
     "01")
         echo "sudo -S apt update" >> $LOGFILE
-        echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        echo $GETPASS | sudo -S apt update 2>&1 | tee -a $LOGFILE
         echo "" >> $LOGFILE
         echo "#################################################################" >> $LOGFILE
         echo "sudo -S apt upgrade -y" >> $LOGFILE
-        echo $GETPASS | sudo -S apt upgrade -y &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt upgrade -y &>> $LOGFILE
+        echo $GETPASS | sudo -S apt upgrade -y 2>&1 | tee -a $LOGFILE 
         ;;
     "02")
         echo "sudo -S apt update" >> $LOGFILE
-        echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        echo $GETPASS | sudo -S apt update 2>&1 | tee -a $LOGFILE
         echo "" >> $LOGFILE
         echo "#################################################################" >> $LOGFILE
         echo "sudo -S apt full-upgrade -y" >> $LOGFILE
-        echo $GETPASS | sudo -S apt full-upgrade -y &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt full-upgrade -y &>> $LOGFILE
+        echo $GETPASS | sudo -S apt full-upgrade -y 2>&1 | tee -a $LOGFILE
         ;;
     "03")
         echo "sudo -S apt update" >> $LOGFILE
-        echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        echo $GETPASS | sudo -S apt update 2>&1 | tee -a $LOGFILE
         echo $GETPASS | sudo -S apt list --upgradable | grep "アップグレード可" | \
                 cut -f 1 -d "/"  > $PACFILE
 
@@ -73,17 +78,20 @@ case "$GETSEL" in
                 echo "" >> $LOGFILE
                 echo "#################################################################" >> $LOGFILE
                 echo "sudo -S apt install -y --only-upgrade "$RET >> $LOGFILE
-                echo $GETPASS | sudo -S apt install -y --only-upgrade $RET &>> $LOGFILE
+                #echo $GETPASS | sudo -S apt install -y --only-upgrade $RET &>> $LOGFILE
+                echo $GETPASS | sudo -S apt install -y --only-upgrade $RET 2>&1 | tee -a $LOGFILE
             fi
         fi
         ;;
     "04")
         echo "sudo -s apt update" >> $LOGFILE
-        echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt update &>> $LOGFILE
+        echo $GETPASS | sudo -S apt update 2>&1 | tee -a $LOGFILE
         echo "" >> $LOGFILE
         echo "#################################################################" >> $LOGFILE
         echo "sudo -S apt autoremove -y "$RET >> $LOGFILE
-        echo $GETPASS | sudo -S apt autoremove -y &>> $LOGFILE
+        #echo $GETPASS | sudo -S apt autoremove -y &>> $LOGFILE
+        echo $GETPASS | sudo -S apt autoremove -y 2>&1 | tee -a $LOGFILE
         ;;
     *)
         echo "処理が選択されていません" >> $LOGFILE
